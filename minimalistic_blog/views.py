@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from django.views.generic import ListView, TemplateView, FormView, DeleteView, UpdateView
 
 from minimalistic_blog.models import Blog, Comment
-
+from minimalistic_blog.forms import BlogForm, CommentForm
 
 """ Alle existierenden Artikel auflisten. """
 class ArticleListView(ListView):
@@ -26,7 +27,7 @@ class ArticleTemplateView(TemplateView):
 """ Einen neuen Artikel erstellen. """
 class ArticleFormView(FormView):
     template_name = "article_create_form.html"
-    form_class = ArticleForm
+    form_class = BlogForm
     success_url = ""
 
     def form_valid(self, form, *args, **kwargs):
