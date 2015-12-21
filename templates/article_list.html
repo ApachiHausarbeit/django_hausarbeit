@@ -1,0 +1,5 @@
+{% for article in articles %}
+    <ul>
+        <li><a href="{% url "article_show" article.id %}">{{ article.title }}</a>, created at: {{ article.created_at }} <a href="{% url "article_delete" article.id %}">delete</a></li>
+    </ul>
+{% endfor %}

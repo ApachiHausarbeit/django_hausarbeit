@@ -7,40 +7,41 @@ from minimalistic_blog.forms import BlogForm, CommentForm
 """ Alle existierenden Artikel auflisten. """
 class ArticleListView(ListView):
     model = Blog
+    template_name = "article_list.html"
+
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
-        context['articles'] = Blog.objects.all().order_by('-created_at')
+        context["articles"] = Blog.objects.all().order_by("-created_at")
         return context
 
 
 """ Einen bestimmten Artikel und dessen Kommentare anzeigen lassen. """
 class ArticleTemplateView(TemplateView):
-    template_name = 'article_show.html'
+    template_name = "article_show.html"
 
     def get_context_data(self, **kwargs):
         context = super(ArticleTemplateView, self).get_context_data(**kwargs)
-        context['article'] = Blog.objects.get(id=kwargs['blog_id'])
-        context['comments'] = Comment.objects.filter(blog=kwargs['blog_id'])
+        context["article"] = Blog.objects.get(id=kwargs["id"])
+        context["comments"] = Comment.objects.filter(blog=kwargs["id"])
         return context
-
 
 """ Einen neuen Artikel erstellen. """
 class ArticleFormView(FormView):
-    template_name = "article_create_form.html"
+    template_name = "simple_create_form.html"
     form_class = BlogForm
-    success_url = ""
+    success_url = "/blog/article-list/"
 
     def form_valid(self, form, *args, **kwargs):
         form.instance.author = self.request.user
         form.save()
-        return super(ArticleCreateView, self).form_valid(form)
+        return super(ArticleFormView, self).form_valid(form)
 
 
 """ Einen Artikel löschen. """
 class ArticleDeleteView(DeleteView):
     model = Blog
     template_name = "delete_confirmation.html"
-    success_url = ""
+    success_url = "/blog/article-list/"
 
     def get_object(self, queryset=None):
         """ Das Objekt holen und vor dem löschen sicher stellen,
@@ -53,12 +54,13 @@ class ArticleDeleteView(DeleteView):
 
 """ Einen Kommentar erstellen. """
 class CommentFormView(FormView):
-    template_name = "comment_create_form.html"
+    template_name = "simple_create_form.html"
     form_class = CommentForm
-    success_url = ""
+    success_url = "/blog/article-list/"
 
     def form_valid(self, form, *args, **kwargs):
         form.instance.author = self.request.user
+        form.instance.blog_id = self.kwargs['id']
         form.save()
         return super(CommentFormView, self).form_valid(form)
 
@@ -67,7 +69,7 @@ class CommentFormView(FormView):
 class CommentDeleteView(DeleteView):
     model = Comment
     template_name = "delete_confirmation.html"
-    success_url = ""
+    success_url = "/blog/article-list/"
 
     def get_object(self, queryset=None):
         """ Das Objekt holen und vor dem löschen sicher stellen,

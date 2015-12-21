@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from django.forms import ModelForm
 from minimalistic_blog.models import Blog, Comment
+
 
 """ ModelForm die den Feldern die Klasse form-control hinzufügt. """
 class BootstrapModelForm(ModelForm):
@@ -21,5 +23,5 @@ class BlogForm(BootstrapModelForm):
 """ CommentForm """
 class CommentForm(BootstrapModelForm):
     class Meta:
-        model = Blog
+        model = Comment
         exclude = ('author', 'blog',)

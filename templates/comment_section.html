@@ -1,0 +1,9 @@
+{% for comment in comments %}
+    <hr>
+    <p>Written by: {{ comment.author }} on {{ comment.created_at }} <a href="{% url "comment_delete" comment.id %}">delete</a></p>
+    <p>{{ comment.body }}</p>
+{% empty %}
+    <p>No comments exist yet</p>
+{% endfor %}
+
+<a href="{% url "comment_create" article.id %}">Add comment</a>
