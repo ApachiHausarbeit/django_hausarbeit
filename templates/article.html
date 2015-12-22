@@ -1,13 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if article.author == user %}
-    <a href="{% url 'article_update' article.id %}">Edit this article</a>
-    <a href="{% url 'article_delete' article.id %}">Delete this article</a>
-{% endif %}
+    <table style="width: 60%;" class="table table-hover table-bordered">
+        <tr>
+            <td>Title:</td>
+            <td>{{ article.title }}</td>
+        </tr>
+        <tr>
+            <td>Author:</td>
+            <td>{{ article.author }}</td>
+        </tr>
+        <tr>
+            <td>Created at:</td>
+            <td>{{ article.created_at }}</td>
+        </tr>
+        {% if article.author == user %}
+            <tr>
+                <td>
+                    <a href="{% url 'article_update' article.id %}">Edit this article</a>
+                </td>
+                <td>
+                    <a href="{% url 'article_delete' article.id %}">Delete this article</a>
+                </td>
+            </tr>
+        {% endif %}
+    </table>
 
-<p>"{{ article.title }}", written by {{ article.author }} on {{ article.created_at }}</p>
-<p>Article content: {{ article.body }}</p>
+<div style="width: 60%;" class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Content</h3>
+            </div>
+
+            <div class="panel-body">
+                {{ article.body }}
+            </div>
+        </div>
+    </div>
+</div>
 
 {% include 'comment_section.html' %}
 {% endblock content %}

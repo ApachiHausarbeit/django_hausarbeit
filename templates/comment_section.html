@@ -1,13 +1,25 @@
 {% for comment in comments %}
+    <p>Want to share your thoughts? <a href="{% url 'comment_create' article.id %}">Comment here!</a></p>
     <hr>
-    <p>Written by: {{ comment.author }} on {{ comment.created_at }}</p>
-    {% if article.author == user %}
-    <a href="{% url 'comment_delete' id=article.id pk=comment.id %}">delete</a>
-    <a href="{% url 'comment_update' id=article.id pk=comment.id %}">update</a>
-    {% endif %}
-    <p>{{ comment.body }}</p>
+    <div style="width: 60%;" class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>{{ comment.author }}</strong> created this on {{ comment.created_at }}</h3>
+                    {% if article.author == user %}
+                        <a href="{% url 'comment_delete' id=article.id pk=comment.id %}">delete</a>
+                        <a href="{% url 'comment_update' id=article.id pk=comment.id %}">update</a>
+                    {% endif %}
+                </div>
+
+                <div class="panel-body">
+                    {{ comment.body }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% empty %}
-    <p>No comments exist yet</p>
+    <hr>
+    <p>There are no comments yet, <a href="{% url 'comment_create' article.id %}">create yours!</a></p>
 {% endfor %}
 
-<a href="{% url 'comment_create' article.id %}">Add comment</a>
