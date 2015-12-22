@@ -1,5 +1,23 @@
-{% for article in articles %}
-    <ul>
-        <li><a href="{% url "article_show" article.id %}">{{ article.title }}</a>, created at: {{ article.created_at }} <a href="{% url "article_delete" article.id %}">delete</a></li>
-    </ul>
-{% endfor %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Created at</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+            <tr>
+                <td><a href="{% url "article" article.id %}">{{ article.title }}</a></td>
+                <td>{{ article.author }}</td>
+                <td>{{ article.created_at }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

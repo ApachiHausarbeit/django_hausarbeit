@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if article.author == user %}
+    <a href="{% url 'article_update' article.id %}">Edit this article</a>
+    <a href="{% url 'article_delete' article.id %}">Delete this article</a>
+{% endif %}
+
+<p>"{{ article.title }}", written by {{ article.author }} on {{ article.created_at }}</p>
+<p>Article content: {{ article.body }}</p>
+
+{% include 'comment_section.html' %}
+{% endblock content %}
