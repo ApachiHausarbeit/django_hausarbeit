@@ -5,6 +5,7 @@ from minimalistic_blog.models import Blog, Comment
 from minimalistic_blog.forms import BlogForm, CommentForm
 from minimalistic_blog.auth import LoginRequiredMixin, logout_view
 
+
 """ Einen bestimmten Artikel und dessen Kommentare anzeigen lassen. """
 class ArticleTemplateView(TemplateView):
     template_name = "article.html"
@@ -65,7 +66,7 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.user.is_authenticated():
             self.obj.author = self.request.user
         self.obj.save()
-        form.save_m2m()
+        form.save()
         return super(ArticleUpdateView, self).form_valid(form)
 
     def get_success_url(self):
@@ -115,7 +116,7 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.user.is_authenticated():
             self.obj.author = self.request.user
         self.obj.save()
-        form.save_m2m()
+        form.save()
         return super(CommentUpdateView, self).form_valid(form)
 
     def get_success_url(self):
