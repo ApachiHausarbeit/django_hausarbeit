@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import ListView, TemplateView, FormView, DeleteView, UpdateView
+from django.http import Http404
 
 from minimalistic_blog.models import Blog, Comment
 from minimalistic_blog.forms import BlogForm, CommentForm
@@ -61,6 +62,14 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     form_class = BlogForm
     template_name = "simple_form.html"
 
+    def get_object(self, queryset=None):
+        """ Das Objekt holen und vor dem aktualisieren sicher stellen,
+        dass es dem request.user gehört."""
+        obj = super(ArticleUpdateView, self).get_object()
+        if not obj.author == self.request.user:
+            raise Http404
+        return obj
+
     def form_valid(self, form):
         self.obj = form.save(commit=False)
         if self.request.user.is_authenticated():
@@ -110,6 +119,14 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
     model = Comment
     form_class = CommentForm
     template_name = "simple_form.html"
+
+    def get_object(self, queryset=None):
+        """ Das Objekt holen und vor dem aktualisieren sicher stellen,
+        dass es dem request.user gehört."""
+        obj = super(CommentUpdateView, self).get_object()
+        if not obj.author == self.request.user:
+            raise Http404
+        return obj
 
     def form_valid(self, form):
         self.obj = form.save(commit=False)

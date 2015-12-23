@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h1>Blog Article</h1>
+    <br>
     <table style="width: 60%;" class="table table-hover table-bordered">
         <tr>
             <td>Title:</td>
@@ -26,19 +28,23 @@
         {% endif %}
     </table>
 
-<div style="width: 60%;" class="container">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Content</h3>
-            </div>
+    <br>
 
-            <div class="panel-body">
-                {{ article.body }}
+    <div style="width: 60%;" class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Content</h3>
+                </div>
+
+                <div class="panel-body">
+                    {{ article.body }}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{% include 'comment_section.html' %}
+    <hr>
+
+    {% include 'comment_section.html' %}
 {% endblock content %}

@@ -1,6 +1,8 @@
+<h2>Comment Section!</h2>
+<a href="{% url 'comment_create' article.id %}">Share your thoughts!</a>
+<br>
 {% for comment in comments %}
-    <p>Want to share your thoughts? <a href="{% url 'comment_create' article.id %}">Comment here!</a></p>
-    <hr>
+    <br>
     <div style="width: 60%;" class="container">
         <div class="row">
             <div class="panel panel-default">
@@ -19,7 +21,7 @@
         </div>
     </div>
 {% empty %}
-    <hr>
-    <p>There are no comments yet, <a href="{% url 'comment_create' article.id %}">create yours!</a></p>
+    <br>
+    <p>There are no comments yet, create yours!</p>
 {% endfor %}
 

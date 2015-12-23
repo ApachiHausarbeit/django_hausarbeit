@@ -1,0 +1,14 @@
+BEGIN;
+--
+-- Create model Blog
+--
+CREATE TABLE "minimalistic_blog_blog" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(80) NOT NULL UNIQUE, "body" text NOT NULL, "created_at" datetime NOT NULL, "author_id" integer NOT NULL REFERENCES "auth_user" ("id"));
+--
+-- Create model Comment
+--
+CREATE TABLE "minimalistic_blog_comment" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "body" text NOT NULL, "created_at" datetime NOT NULL, "author_id" integer NOT NULL REFERENCES "auth_user" ("id"), "blog_id" integer NOT NULL REFERENCES "minimalistic_blog_blog" ("id"));
+CREATE INDEX "minimalistic_blog_blog_4f331e2f" ON "minimalistic_blog_blog" ("author_id");
+CREATE INDEX "minimalistic_blog_comment_4f331e2f" ON "minimalistic_blog_comment" ("author_id");
+CREATE INDEX "minimalistic_blog_comment_64458f32" ON "minimalistic_blog_comment" ("blog_id");
+
+COMMIT;
